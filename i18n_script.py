@@ -51,18 +51,25 @@ def get_property_name(dirty_name: str) -> list[str]:
 def format_property_name(listed_name: list[str] ,reference_value: str="") -> str:
 
     output_name = ""
-
+    
+    # Se tiver valor de referencia, concatena no começo
     if reference_value != "":
         output_name += reference_value
         output_name += "."
 
+    # Caso seja requiredMessage
+    if "obrigatorio" in listed_name:
+        output_name = ".".join(listed_name[1:-1]) + ".requiredMessage"
+        return output_name
+    
+    # Caso não seja nenhum caso acima, concatena tudo à output_name
     for word in listed_name:
         output_name += word
+        
         if (word != listed_name[-1]):
             output_name += "."
 
     return output_name
-
 
 
 def main():
