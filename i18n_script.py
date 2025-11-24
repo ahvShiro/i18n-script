@@ -37,6 +37,7 @@ def load_generics():
 
 def get_property_name(dirty_name: str) -> list[str]:
     list_words = unidecode.unidecode(dirty_name.strip().lower())
+    list_words = re.sub('[^A-Za-z0-9.\s]+', '', list_words)
     list_words = list_words.split()
 
     # remove stopwords
@@ -75,8 +76,8 @@ def main():
         copy = pyperclip.paste()
         
         formatted_property_name = get_property_name(copy)
-        property_rotulo= "usercreate." + format_property_name(formatted_property_name) + "=" + copy
-        property_xhtml = "#{msg['usercreate." + format_property_name(formatted_property_name) + "']}"
+        property_rotulo= "pessoaemitente." + format_property_name(formatted_property_name) + "=" + copy
+        property_xhtml = "#{msg['pessoaemitente." + format_property_name(formatted_property_name) + "']}"
         
         
         print("> Texto copiado, cole no .properties")
