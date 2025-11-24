@@ -2,6 +2,7 @@ import os
 import re
 import unidecode
 from dotenv import load_dotenv
+import pyperclip
 
 load_dotenv()
 
@@ -64,9 +65,34 @@ def format_property_name(listed_name: list[str] ,reference_value: str="") -> str
 
 
 def main():
-    list = get_property_name("Gerar contas a pagar de fechamento de folha")
+    print("> Pressione Ctrl + C para sair")
     
-    print(format_property_name(list, "usercreate"))
+    while True:
+        
+        print("> Copie a string a ser traduzida e pressione enter para colar .properties na clipboard: ")
+        input()
+        
+        copy = pyperclip.paste()
+        
+        formatted_property_name = get_property_name(copy)
+        property_rotulo= "usercreate." + format_property_name(formatted_property_name) + "=" + copy
+        property_xhtml = "#{msg['usercreate." + format_property_name(formatted_property_name) + "']}"
+        
+        
+        print("> Texto copiado, cole no .properties")
+        pyperclip.copy(property_rotulo)
+        
+        print(property_rotulo)
+        
+        print("> Pressione enter para colar .xhtml na clipboard: ")
+        input()
+        
+        print("> Texto copiado, cole no .xhtml")
+        pyperclip.copy(property_xhtml)
+
+        print(property_xhtml)
+        
+        print("="*50)
 
 
 if __name__ == "__main__":
