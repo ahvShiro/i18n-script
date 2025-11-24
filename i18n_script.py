@@ -6,8 +6,9 @@ import pyperclip
 
 load_dotenv()
 
-
+REFERENCE_VALUE = os.getenv('REFERENCE_VALUE')
 ARQUIVO_PROPERTIES = os.getenv('PROPERTIES_FILEPATH')
+
 ENCODING_PROPERTIES = "latin-1"
 ENCODING_XHTML = "utf-8"
 
@@ -37,9 +38,9 @@ def load_generics():
 
 def get_property_name(dirty_name: str) -> list[str]:
     list_words = unidecode.unidecode(dirty_name.strip().lower())
-    list_words = re.sub('[^A-Za-z0-9.\s]+', '', list_words)
+    list_words = re.sub('[^A-Za-z0-9\s]+', '', list_words)
     list_words = list_words.split()
-
+    
     # remove stopwords
     result_list = [word for word in list_words if word not in STOP_WORDS]
     
@@ -48,7 +49,7 @@ def get_property_name(dirty_name: str) -> list[str]:
     return result_list
     
 
-def format_property_name(listed_name: list[str] ,reference_value: str="") -> str:
+def format_property_name(listed_name: list[str] ,reference_value: str=REFERENCE_VALUE) -> str:
 
     output_name = ""
     
@@ -83,8 +84,8 @@ def main():
         copy = pyperclip.paste()
         
         formatted_property_name = get_property_name(copy)
-        property_rotulo= "pessoaemitente." + format_property_name(formatted_property_name) + "=" + copy
-        property_xhtml = "#{msg['pessoaemitente." + format_property_name(formatted_property_name) + "']}"
+        property_rotulo=  format_property_name(formatted_property_name) + "=" + copy + "\n"
+        property_xhtml = "#{msg['" + format_property_name(formatted_property_name) + "']}"
         
         
         print("> Texto copiado, cole no .properties")
