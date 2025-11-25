@@ -60,8 +60,9 @@ def format_property_name(listed_name: list[str] ,reference_value: str=REFERENCE_
 
     # Caso seja requiredMessage
     if "obrigatorio" in listed_name:
-        output_name = ".".join(listed_name[1:-1]) + ".requiredMessage"
-        return output_name
+        joined_fieldname = ".".join(listed_name[1:-1])
+        return output_name + joined_fieldname + ".requiredMessage"
+         
     
     # Caso não seja nenhum caso acima, concatena tudo à output_name
     for word in listed_name:
