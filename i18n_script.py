@@ -74,7 +74,7 @@ def format_property_name(listed_name: list[str]) -> str:
         output_name += "."
 
     # Caso seja requiredMessage
-    if "obrigatorio" in listed_name:
+    if "obrigatorio" in listed_name and reference_value != "excecao":
         joined_fieldname = ".".join(listed_name[1:-1])
         return output_name + joined_fieldname + ".requiredMessage"
          
