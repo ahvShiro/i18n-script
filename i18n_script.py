@@ -27,7 +27,7 @@ STOP_WORDS = {'de',  'a',  'o',  'que',  'e',  'do',  'da',  'em',  'um',  'para
               'estava',  'estávamos',  'estavam',  'estivera',  'estivéramos',  'esteja',  'estejamos',  'estejam',  'estivesse',  'estivéssemos',  'estivessem',  'estiver',  'estivermos',  'estiverem',  'hei',  'há',  'havemos',  'hão',  'houve',  'houvemos',  'houveram',  'houvera',  'houvéramos',  'haja',  'hajamos',  'hajam',  'houvesse',  'houvéssemos',  'houvessem',  'houver',  'houvermos',  'houverem',  'houverei',  'houverá',  'houveremos',  'houverão',  'houveria',  'houveríamos',  'houveriam',  'sou',  'somos',  'são',  'era',  'éramos',  'eram',  'fui',  'foi',  'fomos',  'foram',  'fora',  'fôramos',  'seja',  'sejamos',  'sejam',  'fosse',  'fôssemos',  'fossem',  'for',  'formos',  'forem',  'serei',  'será',  'seremos',  'serão',  'seria',  'seríamos',  'seriam',  'tenho',  'tem',  'temos',  'tém',  'tinha',  'tínhamos',  'tinham',  'tive',  'teve',  'tivemos',  'tiveram',  'tivera',  'tivéramos',  'tenha',  'tenhamos',  'tenham',  'tivesse',  'tivéssemos',  'tivessem',  'tiver',  'tivermos',  'tiverem',  'terei',  'terá',  'teremos',  'terão',  'teria',  'teríamos',  'teriam'}
 
 generics = {}
-reference_value = ""
+reference_value = REFERENCE_VALUE
 
 
 def load_generics():
@@ -64,7 +64,7 @@ def get_property_name(dirty_name: str) -> list[str]:
     return result_list
     
 
-def format_property_name(listed_name: list[str] ,reference_value: str=REFERENCE_VALUE) -> str:
+def format_property_name(listed_name: list[str]) -> str:
 
     output_name = ""
     
@@ -88,7 +88,7 @@ def format_property_name(listed_name: list[str] ,reference_value: str=REFERENCE_
 
     return output_name
 
-
+get_reference_value = ()
 def main():
     print("> Pressione Ctrl + C para sair")
     
@@ -102,20 +102,27 @@ def main():
         formatted_property_name = get_property_name(copy)
         property_rotulo=  format_property_name(formatted_property_name) + "=" + copy + "\n"
         property_xhtml = "#{msg['" + format_property_name(formatted_property_name) + "']}"
-        
+        property_controller= format_property_name(formatted_property_name)
         
         print("> Texto copiado, cole no .properties")
         pyperclip.copy(property_rotulo)
         
         print(property_rotulo)
         
-        print("> Pressione enter para colar .xhtml na clipboard: ")
+        print("> Pressione enter para colar a mensagem no clipboard: ")
         input()
-        
-        print("> Texto copiado, cole no .xhtml")
-        pyperclip.copy(property_xhtml)
 
-        print(property_xhtml)
+        if "excecao" in reference_value:
+            print("> Texto copiado, cole no controlador")
+            pyperclip.copy(property_controller)
+
+            print(property_controller)
+
+        else:
+            print("> Texto copiado, cole no .xhtml")
+            pyperclip.copy(property_xhtml)
+
+            print(property_xhtml)
         
         print("="*50)
 
