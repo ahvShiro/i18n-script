@@ -80,7 +80,7 @@ def format_property_name(listed_name: list[str]) -> str:
     
     # Caso seja emptyMessage
     elif "nenhum" in listed_name and "encontrado" in listed_name:
-        joined_fieldname = ".".join(listed_name[0:-1])
+        joined_fieldname = ".".join(listed_name[1:-1])
         return output_name + joined_fieldname + ".emptyMessage"
 
     
