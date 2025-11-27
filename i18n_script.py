@@ -58,7 +58,7 @@ def get_property_name(dirty_name: str) -> list[str]:
     # remove stopwords
     result_list = [word for word in list_words if word not in STOP_WORDS]
     
-    if len(list_words) > 6:
+    if len(list_words) > 7:
         result_list = crop_word_list(result_list, PROPERTY_CROP_QUANTITY_WORDS_START, PROPERTY_CROP_QUANTITY_WORDS_END)
     
     return result_list
@@ -74,10 +74,15 @@ def format_property_name(listed_name: list[str]) -> str:
         output_name += "."
 
     # Caso seja requiredMessage
-    if "obrigatorio" in listed_name:
+    if "obrigatorio" in listed_name or "necessario" in listed_name:
         joined_fieldname = ".".join(listed_name[1:-1])
         return output_name + joined_fieldname + ".requiredMessage"
-         
+    
+    # Caso seja emptyMessage
+    elif "nenhum" in listed_name and "encontrado" in listed_name:
+        joined_fieldname = ".".join(listed_name[0:-1])
+        return output_name + joined_fieldname + ".emptyMessage"
+
     
     # Caso não seja nenhum caso acima, concatena tudo à output_name
     for word in listed_name:
@@ -101,7 +106,7 @@ def main():
         
         formatted_property_name = format_property_name(get_property_name(raw_string))
         
-        property_rotulo = f"{formatted_property_name} = {raw_string}" 
+        property_rotulo = f"{formatted_property_name}={raw_string}\n" 
         property_xhtml = f"#{{msg['{formatted_property_name}']}}"
         
                 
