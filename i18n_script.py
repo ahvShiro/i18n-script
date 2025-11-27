@@ -97,13 +97,14 @@ def main():
         print("> Copie a string a ser traduzida e pressione enter para colar .properties na clipboard: ")
         input()
         
-        copy = pyperclip.paste()
+        raw_string = pyperclip.paste()
         
-        formatted_property_name = get_property_name(copy)
-        property_rotulo=  format_property_name(formatted_property_name) + "=" + copy + "\n"
-        property_xhtml = "#{msg['" + format_property_name(formatted_property_name) + "']}"
-        property_controller= format_property_name(formatted_property_name)
+        formatted_property_name = format_property_name(get_property_name(raw_string))
         
+        property_rotulo = f"{formatted_property_name} = {raw_string}" 
+        property_xhtml = f"#{{msg['{formatted_property_name}']}}"
+        
+                
         print("> Texto copiado, cole no .properties")
         pyperclip.copy(property_rotulo)
         
@@ -114,9 +115,9 @@ def main():
 
         if "excecao" in reference_value:
             print("> Texto copiado, cole no controlador")
-            pyperclip.copy(property_controller)
+            pyperclip.copy(formatted_property_name)
 
-            print(property_controller)
+            print(formatted_property_name)
 
         else:
             print("> Texto copiado, cole no .xhtml")
