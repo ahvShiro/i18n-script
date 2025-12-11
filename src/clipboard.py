@@ -13,7 +13,7 @@ def monitor():
     print("--- Monitor de Clipboard Ativo ---")
     print("> Copie qualquer texto e eu gerarei o .properties automaticamente.")
     print("> Pressione Ctrl + C para sair.\n")
-    print("> Copie um texto e aperte enter para iniciar o script.\n")
+    print("> Copie um texto e aperte ENTER para iniciar o script.")
     input()
     
     last_text = ""

@@ -30,7 +30,3 @@ def load_generics():
                 generics[key.strip()] = value.strip()
 
         print("Generics Loaded")
-
-
-if __name__ == "__main__":
-    exit
