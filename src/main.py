@@ -1,4 +1,7 @@
 import clipboard
 
 if __name__ == "__main__":
-    clipboard.monitor()
+    try:
+        clipboard.main()
+    except (KeyboardInterrupt):
+        print("> Finalizando script...")

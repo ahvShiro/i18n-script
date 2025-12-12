@@ -11,11 +11,10 @@ REFERENCE_VALUE = os.getenv('REFERENCE_VALUE')
 # Quantas palavras o programa selecionará no o começo ou final da propriedade aparada
 # Ex.: Se start = 3 e end = 2, "Atenção. Não serão adicionados horários repetidos para
 # o mesmo dia na lista!" resulta em "atencao.nao.serao.dia.lista"
-PROPERTY_CROP_QUANTITY_WORDS_START = int(os.getenv('PROPERTY_CROP_QUANTITY_WORDS_START'))
-PROPERTY_CROP_QUANTITY_WORDS_END = int(os.getenv('PROPERTY_CROP_QUANTITY_WORDS_END'))
+PROPERTY_CROP_QUANTITY_WORDS_START = int(os.getenv('PROPERTY_CROP_QUANTITY_WORDS_START', '3'))
+PROPERTY_CROP_QUANTITY_WORDS_END = int(os.getenv('PROPERTY_CROP_QUANTITY_WORDS_END', '2'))
 
-STOP_WORDS = {'de',  'a',  'o',  'que',  'e',  'do',  'da',  'em',  'um',  'para',  'é',  'com',  'não',  'uma',  'os',  'no',  'se',  'na',  'por',  'mais',  'as',  'dos',  'como',  'mas',  'foi',  'ao',  'ele',  'das',  'tem',  'à',  'seu',  'sua',  'ou',  'ser',  'quando',  'muito',  'há',  'nos',  'já',  'está',  'eu',  'também',  'só',  'pelo',  'pela',  'até',  'isso',  'ela',  'entre',  'era',  'depois',  'sem',  'mesmo',  'aos',  'ter',  'seus',  'quem',  'nas',  'me',  'esse',  'eles',  'estão',  'você',  'tinha',  'foram',  'essa',  'num',  'nem',  'suas',  'meu',  'às',  'minha',  'têm',  'numa',  'pelos',  'elas',  'havia',  'seja',  'qual',  'será',  'nós',  'tenho',  'lhe',  'deles',  'essas',  'esses',  'pelas',  'este',  'fosse',  'dele',  'tu',  'te',  'vocês',  'vos',  'lhes',  'meus',  'minhas',  'teu',  'tua',  'teus',  'tuas',  'nosso',  'nossa',  'nossos',  'nossas',  'dela',  'delas',  'esta',  'estes',  'estas',  'aquele',  'aquela',  'aqueles',  'aquelas',  'isto',  'aquilo',  'estou',  'está',  'estamos',  'estão',  'estive',  'esteve',  'estivemos',  'estiveram',
-              'estava',  'estávamos',  'estavam',  'estivera',  'estivéramos',  'esteja',  'estejamos',  'estejam',  'estivesse',  'estivéssemos',  'estivessem',  'estiver',  'estivermos',  'estiverem',  'hei',  'há',  'havemos',  'hão',  'houve',  'houvemos',  'houveram',  'houvera',  'houvéramos',  'haja',  'hajamos',  'hajam',  'houvesse',  'houvéssemos',  'houvessem',  'houver',  'houvermos',  'houverem',  'houverei',  'houverá',  'houveremos',  'houverão',  'houveria',  'houveríamos',  'houveriam',  'sou',  'somos',  'são',  'era',  'éramos',  'eram',  'fui',  'foi',  'fomos',  'foram',  'fora',  'fôramos',  'seja',  'sejamos',  'sejam',  'fosse',  'fôssemos',  'fossem',  'for',  'formos',  'forem',  'serei',  'será',  'seremos',  'serão',  'seria',  'seríamos',  'seriam',  'tenho',  'tem',  'temos',  'tém',  'tinha',  'tínhamos',  'tinham',  'tive',  'teve',  'tivemos',  'tiveram',  'tivera',  'tivéramos',  'tenha',  'tenhamos',  'tenham',  'tivesse',  'tivéssemos',  'tivessem',  'tiver',  'tivermos',  'tiverem',  'terei',  'terá',  'teremos',  'terão',  'teria',  'teríamos',  'teriam'}
+STOP_WORDS = {'de',  'a',  'o',  'que',  'e',  'do',  'da',  'em',  'um',  'para',  'é',  'com',  'não',  'uma',  'os',  'no',  'se',  'na',  'por',  'mais',  'as',  'dos',  'como',  'mas',  'foi',  'ao',  'ele',  'das',  'tem',  'à',  'seu',  'sua',  'ou',  'ser',  'quando',  'muito',  'há',  'nos',  'já',  'está',  'eu',  'também',  'só',  'pelo',  'pela',  'até',  'isso',  'ela',  'entre',  'era',  'depois',  'sem',  'mesmo',  'aos',  'ter',  'seus',  'quem',  'nas',  'me',  'esse',  'eles',  'estão',  'você',  'tinha',  'foram',  'essa',  'num',  'nem',  'suas',  'meu',  'às',  'minha',  'têm',  'numa',  'pelos',  'elas',  'havia',  'seja',  'qual',  'será',  'nós',  'tenho',  'lhe',  'deles',  'essas',  'esses',  'pelas',  'este',  'fosse',  'dele',  'tu',  'te',  'vocês',  'vos',  'lhes',  'meus',  'minhas',  'teu',  'tua',  'teus',  'tuas',  'nosso',  'nossa',  'nossos',  'nossas',  'dela',  'delas',  'esta',  'estes',  'estas',  'aquele',  'aquela',  'aqueles',  'aquelas',  'isto',  'aquilo',  'estou',  'está',  'estamos',  'estão',  'estive',  'esteve',  'estivemos',  'estiveram', 'estava',  'estávamos',  'estavam',  'estivera',  'estivéramos',  'esteja',  'estejamos',  'estejam',  'estivesse',  'estivéssemos',  'estivessem',  'estiver',  'estivermos',  'estiverem',  'hei',  'há',  'havemos',  'hão',  'houve',  'houvemos',  'houveram',  'houvera',  'houvéramos',  'haja',  'hajamos',  'hajam',  'houvesse',  'houvéssemos',  'houvessem',  'houver',  'houvermos',  'houverem',  'houverei',  'houverá',  'houveremos',  'houverão',  'houveria',  'houveríamos',  'houveriam',  'sou',  'somos',  'são',  'era',  'éramos',  'eram',  'fui',  'foi',  'fomos',  'foram',  'fora',  'fôramos',  'seja',  'sejamos',  'sejam',  'fosse',  'fôssemos',  'fossem',  'for',  'formos',  'forem',  'serei',  'será',  'seremos',  'serão',  'seria',  'seríamos',  'seriam',  'tenho',  'tem',  'temos',  'tém',  'tinha',  'tínhamos',  'tinham',  'tive',  'teve',  'tivemos',  'tiveram',  'tivera',  'tivéramos',  'tenha',  'tenhamos',  'tenham',  'tivesse',  'tivéssemos',  'tivessem',  'tiver',  'tivermos',  'tiverem',  'terei',  'terá',  'teremos',  'terão',  'teria',  'teríamos',  'teriam'}
 
 reference_value = REFERENCE_VALUE
 
@@ -37,8 +36,7 @@ def get_property_name(dirty_name: str) -> list[str]:
     result_list = [word for word in list_words if word not in STOP_WORDS]
 
     if len(list_words) > 7:
-        result_list = crop_word_list_start_end(
-            result_list, PROPERTY_CROP_QUANTITY_WORDS_START, PROPERTY_CROP_QUANTITY_WORDS_END)
+        result_list = crop_word_list_start_end(result_list, PROPERTY_CROP_QUANTITY_WORDS_START, PROPERTY_CROP_QUANTITY_WORDS_END)
 
     return result_list
 
@@ -70,3 +68,31 @@ def format_property_name(listed_name: list[str]) -> str:
             output_name += "."
 
     return output_name
+
+
+def get_property_dict(message: str,
+                      bundle_var: str = "msg",
+                      is_controller_message: bool = False) -> dict[str: str]:
+    info = {
+        'message': "",          # A mensagem sem alterações
+        'property_name': "",    # O nome da propriedade
+        'string_property': "",  # A string que vai ser passada no arquivo .properties
+        'string_on_file': "",   # A string que vai ser colada no arquivo .xhtml ou .java
+    }
+
+    info['message'] = message.strip()
+
+    # teste.ola.mundo
+    info['property_name'] = format_property_name(get_property_name(info['message']))
+
+    # teste.ola.mundo=Olá mundo
+    info['string_property'] = f"{info['property_name']}={info['message']}\n"
+
+    if is_controller_message:
+        # teste.ola.mundo
+        info['string_on_file'] = info['property_name']
+    else:
+        # #{msg['teste.ola.mundo']}
+        info['string_on_file'] = f"#{{{bundle_var}['{info['property_name']}']}}"
+
+    return info

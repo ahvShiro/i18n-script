@@ -7,60 +7,79 @@ import keyboard
 
 load_dotenv()
 
-BUNDLE_VAR = os.getenv('BUNDLE_VAR')
+BUNDLE_VAR = os.getenv('BUNDLE_VAR', 'msg')
+
+def main():
+    print("> Pressione Ctrl + C para sair")
+    print("> Copie a string a ser traduzida e pressione enter para colar .properties na clipboard: ")
+    dict_strings = {}
+    
+
+    while True:
+        
+        if (keyboard.is_pressed("ctrl+c")):
+            time.sleep(0.5)
+            print("="*50)
+            message = pyperclip.paste()
+    
+            dict_strings = get_property_dict(message, bundle_var = BUNDLE_VAR, is_controller_message = REFERENCE_VALUE.endswith("excecao"))
+                    
+                # info = {
+                #     'message': "",          # A mensagem sem alterações
+                #     'property_name': "",    # O nome da propriedade
+                #     'string_property': "",  # A string que vai ser passada no arquivo .properties
+                #     'string_on_file': "",   # A string que vai ser colada no arquivo .xhtml ou .java
+                # }
+                
+            print("> Texto copiado, cole no .properties")
+            pyperclip.copy(dict_strings['string_property'])
+            print(dict_strings['string_property'])
+            
+        if (keyboard.is_pressed("ctrl+v")):
+            time.sleep(0.5)
+            print("="*50)
+
+            if "excecao" in reference_value:
+                print("> Texto copiado, cole no controlador")
+                pyperclip.copy(dict_strings['property_name'])
+
+                print(dict_strings['property_name'])
+
+            else:
+                print("> Texto copiado, cole no .xhtml")
+                pyperclip.copy(dict_strings['string_on_file'])
+
+                print(dict_strings['string_on_file'])
+                
+            dict_strings = {key: "" for key in dict_strings}
+            
 
 def monitor():
     print("--- Monitor de Clipboard Ativo ---")
     print("> Copie qualquer texto e eu gerarei o .properties automaticamente.")
     print("> Pressione Ctrl + C para sair.\n")
     print("> Copie um texto e aperte ENTER para iniciar o script.")
-    input()
     
-    last_text = ""
+    input()
 
-    try:
-        next_paste_content = None
-        while True:
-            if next_paste_content is None:
-                current_text = pyperclip.paste().strip()
-                
-                if current_text and current_text != last_text and "=" not in current_text and "#{" not in current_text:
-                    
-                    property_name = format_property_name(get_property_name(current_text))
-                    string_in_property_file = f"{property_name}={current_text}\n"
-                    
-                    if "excecao" in property_name:
-                        next_paste_content = property_name
-                        tipo_destino = "CONTROLADOR"
-                    else:
-                        next_paste_content = f"#{{{BUNDLE_VAR}['{property_name}']}}"
-                        tipo_destino = "XHTML"
+    dict_with_formatted_data = {}
+    
+    message = pyperclip.paste()
+    
+    dict_with_formatted_data = get_property_dict(message, bundle_var = BUNDLE_VAR, is_controller_message = REFERENCE_VALUE.endswith("excecao"))
+    
+    print(dict_with_formatted_data)
+        
+        # # teste.ola.mundo=Olá mundo
+        # pyperclip.copy(dict_with_formatted_data['string_property'])
 
-                    pyperclip.copy(string_in_property_file)
-                    last_text = string_in_property_file # Atualiza para não processar de novo
+        # if keyboard.is_pressed("ctrl+v"):
+        #     pyperclip.copy(dict_with_formatted_data['string_on_file'])
+        #     time.sleep(1)
+        
+        # dict_with_formatted_data = {key: "" for key in dict_with_formatted_data}
 
-                    print(f"\n[1/2] Gerado .properties: {property_name}")
-                    print(f"      -> Pode colar no arquivo .properties agora...")
 
-            else:
-                if keyboard.is_pressed('ctrl+v'):
-                    
-                    time.sleep(0.5) 
-                    
-                    pyperclip.copy(next_paste_content)
-                    
-                    print(f"[2/2] Detectado 'Colar'! Clipboard atualizado para {tipo_destino}.")
-                    print(f"      -> Conteúdo: {next_paste_content}")
-                    print("-" * 50)
-                    
-                    next_paste_content = None
-                    
-                    time.sleep(1)
 
-            time.sleep(0.1) 
-
-    except KeyboardInterrupt:
-        print("\nEncerrando.")
-            
 if __name__ == "__main__":
-    monitor()
+    main()
